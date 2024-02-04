@@ -65,4 +65,13 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    @PostMapping("/{bookId}/borrow")
+    public ResponseEntity<String> borrowBook(@RequestParam Long userId, @RequestParam Long bookId) {
+        try {
+            bookService.borrowBook(bookId, userId);
+            return new ResponseEntity<>("Borrow request successful.", HttpStatus.OK);
+        } catch (CustomException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
